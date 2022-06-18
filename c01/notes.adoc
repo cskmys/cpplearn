@@ -255,7 +255,7 @@ For the sake of readability, use braces.
 Do not use `goto` it will affect readability and maintainability of your code.
 ====
 
-Use ternary operator if and only if the code is very short and you can fit in a single line.
+Use ternary operator if and only if the code is very short, and you can fit in a single line.
 
 ==== `switch`
 It is a good alternative when you are testing a variable against too many values of integral type or an `enum`(which is in an integer behind the scenes).
