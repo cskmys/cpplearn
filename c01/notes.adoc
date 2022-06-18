@@ -216,14 +216,14 @@ In {cpp}, even `enum` can be scoped under a class/struct or created as its own `
 Due to scoping, enums can have a same name associated with their constants.
 Hence, you'll need to use fully-qualified names to use them.
 
-In {cpp}, the underlying type of the constants in an enum can be a type other than `int`.
+In {cpp}, the underlying type of the constants in an enum can be a type other integral type other than `int`.
 
 [TIP]
 ====
 Use scoped enum over C style unscoped enum.
 ====
 
-== Preprocessor directives
+=== Preprocessor directives
 These are instructions for the preprocessor.
 They start with `#`
 
@@ -235,4 +235,47 @@ Hence, you need to be very careful when using them.
 
 In modern {cpp}, the only thing you'll probably ever need is `#include`.
 
+== Flow control
 
+These statements allow you to control the flow of the program.
+Hence, you can perform decision-making and looping.
+
+If there is only one statement under the condition for flow control, then braces can be omitted.
+[IMPORTANT]
+====
+For the sake of readability, use braces.
+====
+
+=== Decision-making
+
+`if`(`-else`), `switch`, `goto`, immediate if using ternary operator.
+
+[WARNING]
+====
+Do not use `goto` it will affect readability and maintainability of your code.
+====
+
+Use ternary operator if and only if the code is very short and you can fit in a single line.
+
+==== `switch`
+It is a good alternative when you are testing a variable against too many values of integral type or an `enum`(which is in an integer behind the scenes).
+`break` is used to prevent fall through.
+`default` is used run some code when no conditions are met.
+
+In C++17, you can do:
+----
+switch(int x = someFunc(); x)
+----
+this will make sure that `x` goes out of scope when program comes out of the `switch` statement.
+
+=== Looping
+
+`while`, `do-while`, `for`.
+
+`break` and `continue` can be used to exit the current loop or skip the current iteration.
+
+`while` and `for` are a pre-check loops and `do-while` is a post check loop.
+
+`while` to do something as long as a condition is true.
+`do-while` do something once and then same as `while`
+`for` to do something for a certain number of iterations.
