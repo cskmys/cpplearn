@@ -222,3 +222,17 @@ In {cpp}, the underlying type of the constants in an enum can be a type other th
 ====
 Use scoped enum over C style unscoped enum.
 ====
+
+== Preprocessor directives
+These are instructions for the preprocessor.
+They start with `#`
+
+[WARNING]
+====
+When used incorrectly, can lead to subtle bugs.
+Hence, you need to be very careful when using them.
+====
+
+In modern {cpp}, the only thing you'll probably ever need is `#include`.
+
+
