@@ -9,3 +9,9 @@ Never ever write `using` statements in a header file.
 Use {cpp} scoped enums instead of C-style enums.
 
 In modern {cpp} the only preprocessor you'll probably need is `include`.
+
+Use references and smart pointers instead of C-style pointers.
+
+Declare references that you use to prevent a copy but do not want to change the original instance, as `const&` i.e. const references.
+
+Declare member functions as `const` to make sure that they do not change the member variable.
