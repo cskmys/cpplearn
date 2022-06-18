@@ -1,0 +1,4 @@
+= Notes
+
+{cpp} has safe casts, use them instead of C-style round-bracketed cast which is unsafe.
+

@@ -1,0 +1,3 @@
+= README
+
+https://app.pluralsight.com/library/courses/cplusplus-fundamentals-c17/[C++ Fundamentals Including C++ 17] from pluralsight

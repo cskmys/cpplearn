@@ -1,0 +1,114 @@
+= Notes
+
+== Overview
+
+{cpp} is a powerful language that's suitable for platforms as small as embedded systems, and as large as servers and clusters.
+It delivers tremendous performance, not just fast code, but code that uses less electricity to get the job done.
+
+== Understanding {cpp} in context
+
+Modern {cpp} is way different from older {cpp}.
+
+* Memory management need not be manual
+* No need for manual pointer arithmetic
+* Looks a lot more like C# or Java but faster
+
+{cpp} doesn't belong to a person or a company.
+The https://isocpp.org[standards committee] defines the language and compiler vendors implement their compiler as per this standard.
+[IMPORTANT]
+====
+Backward compatibility is maintained between all versions of the language.
+Hence, no need to worry about code compilation when moving to a new version of the language.
+====
+Different vendors reach 100% compliance at different pace.
+The big 3 compilers are GCC, clang, MSVC.
+Generally, you don't have to worry about this as most compilers will eventually reach there.
+But, it is good to know that this exists.
+
+The https://en.cppreference.com/w/[wiki for {cpp}] lists everything related to the language.
+
+Standard library has a lot of useful classes, collections, smart pointer, and stream IOs etc.
+
+You can find a compiler https://isocpp.org/get-started[here].
+
+== Tools
+{cpp} is a general purpose language which can be used to build a variety of applications:
+
+* Embedded and Mobile devices
+* Console apps
+* Services
+* Server apps
+* Client apps
+* Libraries for all the above
+
+== Variables and Fundamental Types
+
+{cpp} is a strongly-typed language
+
+* Variables can hold only certain types of values
+* Variables need to be declared before they are used
+* Post declaration variable type cannot be changed
+
+There are fundamental built-in types in the language:
+
+* Numbers
+** Integers
++
+All integer datatype corresponds to the number of bytes that it can hold.
+
+*** `char`: 1 byte
+*** `short`: 2 byte
+*** `int`: holds the size of the address bus of the device
++
+most efficient type and not standardized for historic reasons
+*** `long`: 8 byte
+*** `long long`: 16 bytes
+
++
++
+Here the range of numbers that can be held by the integer depends on whether it is signed or unsigned.
+
+*** `signed`: Range: -2^n-1^ to 2^n-1^-1
++
+By default, integer type is considered signed.
+*** `unsigned`: Range: 0 to 2^n^-1
++
+To use unsigned integer type it needs to be explicitly specified using this keyword
+** Real numbers
+*** float
+*** double
+* Boolean
+** bool
+* Single characters
+*** When an utf-8 character is enclosed in single quotes, compiler translates the character into its ascii value which is an unsigned 1 byte number which can be stored into `char` type
+
+User defined types using structs and classes.
+[NOTE]
+====
+They are full participants, they can do everything that a fundamental type can do.
+====
+
+Sometimes typing the type can be annoying, difficult or even impossible.
+Hence, {cpp} has `auto` keyword which forces the compiler to deduce the type for us.
+[NOTE]
+====
+Even if you `auto`, variable is still strongly typed.
+====
+[TIP]
+====
+Use it to enhance code readability, for example, in case of ugly iterator declarations, or difficult to figure out lambda types.
+====
+
+=== Casting
+When we mix types that are incompatible with each other, we might suffer from loss of precision etc.
+Hence, we get a compiler warning.
+If this is intentionally done, then to tell the compiler to not worry, you can do casting.
+[WARNING]
+====
+Don't simply cast to suppress compiler warnings.
+Make sure that you clearly understand what you are doing.
+====
+
+Unlike C which uses unsafe round bracketed casts, {cpp} has safe casts(also called as templated casts), always use them.
+
+
