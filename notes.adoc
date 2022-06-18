@@ -15,3 +15,11 @@ Use references and smart pointers instead of C-style pointers.
 Declare references that you use to prevent a copy but do not want to change the original instance, as `const&` i.e. const references.
 
 Declare member functions as `const` to make sure that they do not change the member variable.
+
+If you are not enabling compiler optimizations, use inline functions.
+
+Avoid calling code that has side effect in the condition clause of statement with boolean/logical operators.
+
+Always do a check to ensure that denominator is non-zero when doing division.
+
+For readability do not use shift operators in place of arithmetic operators when performing multiplication/division by 2.

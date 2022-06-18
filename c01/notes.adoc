@@ -180,6 +180,7 @@ You may not get a linker error though you have violated the promise you made.
 This happens when there is a compilation error in the file.
 There is no linking happening when one of the file itself is not compiled.
 ====
+
 ** When a promise of function is made in a header file but the promise is not kept in other words the function is not implemented anywhere in the project source files
 ** When you forgot to include the proper source file into the project
 
@@ -353,3 +354,125 @@ If you want to use reference only to make sure that there is no copy but at the 
 Returning a value's reference is an advanced technique.
 Unless you understand scope, lifetime very well, you shouldn't be doing that.
 ====
+
+== Operators
+
+=== Arithmetic
+
+* Unary: increment(`++`), and decrement(`--`).
+They can be used to increment/decrement a value pre- or post-execution of a statement where they are used.
++
+[TIP]
+====
+To enhance code readability don't hesitate to skip this and use a binary operator
+====
+
+* Binary:
++
+[WARNING]
+====
+If you do something illegal like division by zero while using division or modulo operator, then the code will crash.
+Hence, always do a check to ensure that denominator is non-zero when doing division.
+====
+** Arithmetic: `{plus}`, `-`, `*`, `/`, and `%`
++
+[NOTE]
+====
+There is no operator for exponent.
+All operators have a precedence between them.
+All meaning punctuations are already used for operators and also there is no piece of punctuation available to be the exponent operator that would have the right operator precedence.
+====
+** Shortcut: `{plus}=` `-=`, `*=`, `/=`
+
+=== Comparisons
+
+`<`, `\<=`, `>`, `>=`, `==`, and `!=`
+
+[WARNING]
+====
+`=` is an assignment operator not an operator to check equality.
+It returns the value that was assigned.
+Hence, if you use it instead of `==`, your condition checking will be flawed.
+For example:
+
+----
+if(a=0)
+----
+will always be false as `=` in above statement assigns `0` to `a` and returns `0` which is interpreted as false.
+
+----
+if(a=3)
+----
+will always be true as `=` in above statement assigns `3` to `a` and returns `3` which is a non-zero value which will be interpreted as true.
+====
+
+[TIP]
+====
+You can avoid the error of using `=` for comparison by:
+
+* writing all your equality checks backwards:
++
+----
+if(3==i)
+----
++
+in this case if you forget to put one of the `=` in `==`:
++
+----
+if(3=i)
+----
++
+you'll get compiler error
+
+* change your compiler warning to a higher level to get a warning message when you have code like
++
+----
+if(i=3)
+----
+
+====
+
+=== Boolean
+
+* Compound decision-making
+** `&&`: if the first condition is false then conditions that follow are never executed
+** `||`: if the first condition is true then conditions that follow are never executed
+
+[WARNING]
+====
+If you have code that has side effects(meaning something that changes the behavior) inside the condition check.
+Then be careful coz they may or may not run due to shorting like described above.
+====
+
+* `!`: to reverse a true or false condition.
+
+=== Bitwise
+
+* logical: `&`, `|`, `^`, `~`
++
+[WARNING]
+====
+Be careful coz if you do:
+
+----
+b = 4|1;
+----
+now `b` is 5
+
+----
+b = 4||1;
+----
+now `b` = 1
+====
+
+* shift:
++
+[NOTE]
+====
+When performing multiplication/division with 2, shift operators can be way faster than arithmetic operators.
+But, don't use them in place of arithmetic operator for code readability.
+Your compiler will do such optimization.
+====
+
+** `<<`: val1 << val2 => val1 * 2^val1^
+** `>>`: val1 >> val2 => val1 / 2^val1^
