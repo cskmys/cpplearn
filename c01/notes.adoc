@@ -111,4 +111,34 @@ Make sure that you clearly understand what you are doing.
 
 Unlike C which uses unsafe round bracketed casts, {cpp} has safe casts(also called as templated casts), always use them.
 
+== User defined types
+=== `class`
 
+A `class` can depict the properties and the behavior.
+Properties are the data members, and behavior is implemented by the function members.
+These members maybe `private`, `protected`, and `public` which determines their visibility to code outside the class.
+
+`private` makes sure that code only within the class can access a member.
+`public` allows code both inside and outside the class to access a member.
+`protected` is like `private` for everyone except the class that inherits the class under consideration.
+
+The access specifier of the base class members within the inherited class depends upon the type of inheritance and the visibility of the base class members in their base class.
+
+An object is an instance of a class which is declared like a variable of a fundamental type.
+
+==== Constructor
+An object's properties can be initialized using a special function called constructor which has the same name as the class and is executed right after the object creation & before any other code is executed.
+
+The compiler inserts a default constructor that initializes the data members.
+The default constructor takes no arguments and hence if the data members are fundamental types they can be filled with junk, and if they are user-defined types such as other class they can call their respective constructor.
+
+You can add your own constructor to initialize the members.
+When you add your own constructor, the compiler stops generating the default constructor.
+Hence, if you would still like to have a default constructor, you will need to explicitly write one.
+
+Just like any other member functions constructors will also have an access specifier.
+Based on how you want to use a particular class, you can determine where to put the constructor.
+
+==== Building
+You'll need to declare it in the header and include it in the source file where you define/implement it.
+Keep a class's definition/implementation in a single source file.
