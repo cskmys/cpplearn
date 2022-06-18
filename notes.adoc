@@ -1,4 +1,7 @@
 = Notes
 
-{cpp} has safe casts, use them instead of C-style round-bracketed cast which is unsafe.
+use `default` for default constructors to initialize with all default values instead of junk.
 
+Use safe casts instead of C-style round-bracketed cast which is unsafe.
+
+Never ever write `using` statements in a header file.

@@ -118,6 +118,8 @@ A `class` can depict the properties and the behavior.
 Properties are the data members, and behavior is implemented by the function members.
 These members maybe `private`, `protected`, and `public` which determines their visibility to code outside the class.
 
+Unless specified, by default the members are private.
+
 `private` makes sure that code only within the class can access a member.
 `public` allows code both inside and outside the class to access a member.
 `protected` is like `private` for everyone except the class that inherits the class under consideration.
@@ -139,6 +141,32 @@ Hence, if you would still like to have a default constructor, you will need to e
 Just like any other member functions constructors will also have an access specifier.
 Based on how you want to use a particular class, you can determine where to put the constructor.
 
+==== Scope
+Variables have a lifetime.
+When an object is declared, the constructor is called and the memory is allocated for it.
+At the end of the closing brace of the function body that it was created in, its destructor is automatically called, and after destructor runs, the next step is to free the memory used by the object.
+Writing a destructor is optional.
+
+[TIP]
+====
+Resource acquisition is done in constructor, and release is done in destructor.
+This way you can never forget to release a particular resource when the object using it no longer exists.
+====
+
 ==== Building
 You'll need to declare it in the header and include it in the source file where you define/implement it.
 Keep a class's definition/implementation in a single source file.
+
+=== `struct`
+This is same as `class` but here, by default, members are `public` unless specified otherwise.
+Conventionally, they are used only to hold data, and as soon as any behavior comes to picture i.e. method, then it is converted into a `class`.
+
+=== `namespace`
+They are used to prevent the name collisions between members of classes.
+It separates from class name with `::`.
+
+[WARNING]
+====
+Never write `using` constructs in a header file.
+People using your header files, may not want to get your `using` statements
+====
