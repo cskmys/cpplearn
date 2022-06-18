@@ -1,7 +1,9 @@
 = Notes
 
-use `default` for default constructors to initialize with all default values instead of junk.
+Use `default` for default constructors to initialize with all default values instead of junk.
 
 Use safe casts instead of C-style round-bracketed cast which is unsafe.
 
 Never ever write `using` statements in a header file.
+
+Use scoped enums instead of C-style enums.

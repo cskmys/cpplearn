@@ -207,3 +207,18 @@ Hence, the inherited class can't see or access the `private` members of the base
 |private
 
 |====
+
+=== `enum`
+It is a construct used to associate unique names to a set of constants.
+Easy to forget constants, so better to use names under an enumeration.
+
+In {cpp}, even `enum` can be scoped under a class/struct or created as its own `enum class`.
+Due to scoping, enums can have a same name associated with their constants.
+Hence, you'll need to use fully-qualified names to use them.
+
+In {cpp}, the underlying type of the constants in an enum can be a type other than `int`.
+
+[TIP]
+====
+Use scoped enum over C style unscoped enum.
+====
