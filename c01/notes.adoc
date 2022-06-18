@@ -124,8 +124,6 @@ Unless specified, by default the members are private.
 `public` allows code both inside and outside the class to access a member.
 `protected` is like `private` for everyone except the class that inherits the class under consideration.
 
-The access specifier of the base class members within the inherited class depends upon the type of inheritance and the visibility of the base class members in their base class.
-
 An object is an instance of a class which is declared like a variable of a fundamental type.
 
 ==== Constructor
@@ -170,3 +168,42 @@ It separates from class name with `::`.
 Never write `using` constructs in a header file.
 People using your header files, may not want to get your `using` statements
 ====
+
+=== inheritance
+
+Inheritance is when you derive a new class from another class.
+This enables code reuse.
+
+The access specifier of the base class members within the inherited class depends upon the type of inheritance and the visibility of the base class members in their base class.
+
+`private` members are anyway not visible to any code outside the class.
+Hence, the inherited class can't see or access the `private` members of the base class.
+
+|====
+|Type of Inheritance |Base class access specifier |Access in derived class
+
+.2+|public
+
+|protected
+|protected
+
+|public
+|public
+
+.2+|protected
+
+|protected
+|protected
+
+|public
+|protected
+
+.2+|private
+
+|protected
+|private
+
+|private
+|private
+
+|====
