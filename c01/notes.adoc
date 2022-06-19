@@ -499,3 +499,14 @@ The overloaded operator can act on same data type or different ones.
 Any operator can be overloaded.
 But use the one which conceptually represents the operation that you want to do.
 ====
+
+== Templates
+Templates are similar to generics in C but differs in some important ways.
+It allows you to apply the same logic/operation on elements of different datatype.
+In {cpp} they are resolved at compile time and no runtime checks, which causes longer compile time but provides better run-time performance.
+They often rely on operator overloads.
+
+[NOTE]
+====
+Much of the STL(standard template library) is template-based as the name suggests
+====

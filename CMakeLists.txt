@@ -38,8 +38,8 @@ endmacro()
 foreach(course ${courses})
     foreach(module ${${course}})
         file(GLOB srcs
-                "${course}/${module}/*.h"
-                "${course}/${module}/*.cpp")
+                "${course}/src/${module}/*.h"
+                "${course}/src/${module}/*.cpp")
         set(name ${course}__${module})
         add_executable(${name} ${srcs})
         set_target_properties(${name} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin/${course}")
