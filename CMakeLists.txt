@@ -27,7 +27,9 @@ set(c01
         m06
         m07
         m08
-        m09)
+        m09
+        m10
+        m11)
 
 macro(makeLink src dest target)
     add_custom_command(TARGET ${target} POST_BUILD COMMAND ${CMAKE_COMMAND} -E create_symlink ${src} ${dest}  DEPENDS  ${dest} COMMENT "mklink ${src} -> ${dest}")

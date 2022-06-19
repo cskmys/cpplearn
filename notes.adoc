@@ -23,3 +23,6 @@ Avoid calling code that has side effect in the condition clause of statement wit
 Always do a check to ensure that denominator is non-zero when doing division.
 
 For readability do not use shift operators in place of arithmetic operators when performing multiplication/division by 2.
+
+To provide access to a private member, public getter should be your first choice.
+Use friend if and only if you think adding a public getter is going to unnecessarily expose the variable to the whole world when in fact it is required by only one class.

@@ -120,7 +120,15 @@ These members maybe `private`, `protected`, and `public` which determines their 
 
 Unless specified, by default the members are private.
 
-`private` makes sure that code only within the class can access a member.
+`private` makes sure that code within the class or the friend of the class can access a member.
+[WARNING]
+====
+Data encapsulation is an important virtue.
+Hence, you should not make all public.
+Make everything private and write a public getter to provide access to required private members.
+Using friend function should be your last choice.
+Use it if and only if you think adding a public getter is going to violate the encapsulation by unnecessarily exposing something that is required by only one class to everyone else.
+====
 `public` allows code both inside and outside the class to access a member.
 `protected` is like `private` for everyone except the class that inherits the class under consideration.
 
@@ -476,3 +484,18 @@ Your compiler will do such optimization.
 
 ** `<<`: val1 << val2 => val1 * 2^val1^
 ** `>>`: val1 >> val2 => val1 / 2^val1^
+
+=== Operator overloading
+It is at the heart of generic coding in {cpp}.
+It works for user-defined types just like it would work for fundamental types.
+For example, instead of writing a function member in a class that compares if two instances are equal or not, you can overload the `==` operator, and use it for such a comparison.
+
+To load an operator, you just need to write a function with a special syntax.
+This function may or may not be a free function.
+The overloaded operator can act on same data type or different ones.
+
+[NOTE]
+====
+Any operator can be overloaded.
+But use the one which conceptually represents the operation that you want to do.
+====
