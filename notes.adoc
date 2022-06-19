@@ -28,3 +28,11 @@ To provide access to a private member, public getter should be your first choice
 Use friend if and only if you think adding a public getter is going to unnecessarily expose the variable to the whole world when in fact it is required by only one class.
 
 While using templates, if a particular operator doesn't make sense for the data type that you want to use in the template, then do template specialization instead of implementing the operator in the data type.
+
+For indirection, references should be your first choice instead of pointers.
+
+Always use `nullptr` for null pointer instead of 0.
+
+Always do a null check when using pointers.
+
+If you want your indirection to never be invalid/null, then use references.

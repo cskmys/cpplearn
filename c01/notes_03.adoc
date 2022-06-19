@@ -1,0 +1,29 @@
+== Indirection
+
+=== Reference
+
+A reference is an alias for a target variable.
+Any action done on the reference is actually being done on the target.
+No need of special punctuation to indicate this, it can be just used as if the actual target is being used.
+
+A reference can only be set to a target when declaring it, and it cannot be made to refer to something else.
+
+=== Pointers
+
+Pointers hold the address of the target variable, or it can also hold nothing meaning point to nowhere.
+To point to nowhere you can use 0 or the keyword `nullptr`
+[TIP]
+====
+Always use `nullptr` keyword for null pointer.
+====
+
+It can be uninitialized, initialized, and reinitialized whenever required.
+You should never leave a pointer uninitialized coz it can take a junk value which might get wrongly interpreted as address, and there is no way to check for this.
+Hence, if you are yet to initialize your pointer, then initialize it to `nullptr` during declaration.
+This way you can do a null check before using the pointer.
+[TIP]
+====
+If you want to make sure that your pointer is never null/invalid, then probably you are better off using a reference.
+====
+
+Special punctuation is required to perform action on the target(called dereferencing), otherwise the operation performed will be interpreted as being performed on the address of the target.

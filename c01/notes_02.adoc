@@ -1,0 +1,262 @@
+== Flow control
+
+These statements allow you to control the flow of the program.
+Hence, you can perform decision-making and looping.
+
+If there is only one statement under the condition for flow control, then braces can be omitted.
+[IMPORTANT]
+====
+For the sake of readability, use braces.
+====
+
+=== Decision-making
+
+`if`(`-else`), `switch`, `goto`, immediate if using ternary operator.
+
+[WARNING]
+====
+Do not use `goto` it will affect readability and maintainability of your code.
+====
+
+Use ternary operator if and only if the code is very short, and you can fit in a single line.
+
+==== `switch`
+It is a good alternative when you are testing a variable against too many values of integral type or an `enum`(which is in an integer behind the scenes).
+`break` is used to prevent fall through.
+`default` is used run some code when no conditions are met.
+
+In C++17, you can do:
+----
+switch(int x = someFunc(); x)
+----
+this will make sure that `x` goes out of scope when program comes out of the `switch` statement.
+
+=== Looping
+
+`while`, `do-while`, `for`.
+
+`break` and `continue` can be used to exit the current loop or skip the current iteration.
+
+`while` and `for` are a pre-check loops and `do-while` is a post check loop.
+
+`while` to do something as long as a condition is true.
+`do-while` do something once and then same as `while`
+`for` to do something for a certain number of iterations.
+
+== Functions
+
+Functions don't have to be a part of class.
+They can be free functions.
+
+Normally, functions are written in source file.
+But, if they are small enough(like one-line functions), then can be written in headers as `inline` functions.
+For class members you may omit the `inline` keyword.
+Inline functions are not compiled as a jump instruction, rather they are simply copied as another line of code at the place where they are called.
+Avoiding a jump via an inline function will save both time and data memory.
+[NOTE]
+====
+If you enable compiler optimization, you don't have to think about all this, modern compiler will auto inline functions wherever appropriate.
+====
+
+[IMPORTANT]
+====
+Member functions should be marked as `const` unless you want to allow the member function to change the member variable.
+====
+
+There is no such thing as a `const` free function coz if you don't want to modify any parameter within the function, you can just take the parameters as const references `const&` but in a member function you can modify member variables without need to pass them into the function.
+Hence, `const` member function exists but not `const` free function.
+
+=== Parameters, and Return
+
+When you pass a parameter to a function or return from a function you can do it by:
+
+* value:
++
+For passing the parameter, a copy of the parameter is made, and the function acts on the instance of the copy.
+Hence, any changes are made on the copy, leaving original instance, unaffected.
++
+For returning the value, a copy of the value is made, hence it is always safe.
+* reference:
++
+When parameter is passed by reference, function acts on the original instance of the parameter.
+Hence, any changes made inside the function changes the original instance.
+This is also used when passing objects as it prevents copy which incurs a runtime cost both in terms of speed and memory.
++
+If you want to use reference only to make sure that there is no copy but at the sametime you want to be sure that the original data is not changed, then you can use `const` on the reference type to prevent modifying it.
++
+[WARNING]
+====
+Returning a value's reference is an advanced technique.
+Unless you understand scope, lifetime very well, you shouldn't be doing that.
+====
+
+== Operators
+
+=== Arithmetic
+
+* Unary: increment(`++`), and decrement(`--`).
+They can be used to increment/decrement a value pre- or post-execution of a statement where they are used.
++
+[TIP]
+====
+To enhance code readability don't hesitate to skip this and use a binary operator
+====
+
+* Binary:
++
+[WARNING]
+====
+If you do something illegal like division by zero while using division or modulo operator, then the code will crash.
+Hence, always do a check to ensure that denominator is non-zero when doing division.
+====
+** Arithmetic: `{plus}`, `-`, `*`, `/`, and `%`
++
+[NOTE]
+====
+There is no operator for exponent.
+All operators have a precedence between them.
+All meaning punctuations are already used for operators and also there is no piece of punctuation available to be the exponent operator that would have the right operator precedence.
+====
+** Shortcut: `{plus}=` `-=`, `*=`, `/=`
+
+=== Comparisons
+
+`<`, `\<=`, `>`, `>=`, `==`, and `!=`
+
+[WARNING]
+====
+`=` is an assignment operator not an operator to check equality.
+It returns the value that was assigned.
+Hence, if you use it instead of `==`, your condition checking will be flawed.
+For example:
+
+----
+if(a=0)
+----
+will always be false as `=` in above statement assigns `0` to `a` and returns `0` which is interpreted as false.
+
+----
+if(a=3)
+----
+will always be true as `=` in above statement assigns `3` to `a` and returns `3` which is a non-zero value which will be interpreted as true.
+====
+
+[TIP]
+====
+You can avoid the error of using `=` for comparison by:
+
+* writing all your equality checks backwards:
++
+----
+if(3==i)
+----
++
+in this case if you forget to put one of the `=` in `==`:
++
+----
+if(3=i)
+----
++
+you'll get compiler error
+
+* change your compiler warning to a higher level to get a warning message when you have code like
++
+----
+if(i=3)
+----
+
+====
+
+=== Boolean
+
+* Compound decision-making
+** `&&`: if the first condition is false then conditions that follow are never executed
+** `||`: if the first condition is true then conditions that follow are never executed
+
+[WARNING]
+====
+If you have code that has side effects(meaning something that changes the behavior) inside the condition check.
+Then be careful coz they may or may not run due to shorting like described above.
+====
+
+* `!`: to reverse a true or false condition.
+
+=== Bitwise
+
+* logical: `&`, `|`, `^`, `~`
++
+[WARNING]
+====
+Be careful coz if you do:
+
+----
+b = 4|1;
+----
+now `b` is 5
+
+----
+b = 4||1;
+----
+now `b` = 1
+====
+
+* shift:
++
+[NOTE]
+====
+When performing multiplication/division with 2, shift operators can be way faster than arithmetic operators.
+But, don't use them in place of arithmetic operator for code readability.
+Your compiler will do such optimization.
+====
+
+** `<<`: val1 << val2 => val1 * 2^val1^
+** `>>`: val1 >> val2 => val1 / 2^val1^
+
+=== Operator overloading
+It is at the heart of generic coding in {cpp}.
+It works for user-defined types just like it would work for fundamental types.
+For example, instead of writing a function member in a class that compares if two instances are equal or not, you can overload the `==` operator, and use it for such a comparison.
+
+To load an operator, you just need to write a function with a special syntax.
+This function may or may not be a free function.
+The overloaded operator can act on same data type or different ones.
+
+[NOTE]
+====
+Any operator can be overloaded.
+But use the one which conceptually represents the operation that you want to do.
+====
+
+== Templates
+Templates are similar to generics in C but differs in some important ways.
+It allows you to apply the same logic/operation on elements of different datatype.
+In {cpp} they are resolved at compile time and no runtime checks, which causes longer compile time but provides better run-time performance.
+They often rely on operator overloads.
+
+[NOTE]
+====
+Much of the STL(standard template library) is template-based as the name suggests
+====
+
+Templates are entirely written out in header files as the compiler needs to see them fully during preprocessing in order to generate the code for each version of the data type used by the template.
+
+[WARNING]
+====
+Do not write any template code in source file.
+All template code should be in header file.
+====
+
+Unlike Rust, {cpp} doesn't have a mechanism yet to annotate the conditions that need to be fulfilled by an object used as `T` in template class/function(or traits in Rust terminology).
+Hence, one will have to try to use an object as `T` in template class/function, and see if the compiler throws errors or not.
+If there are errors, you can implement the conditions that need to be satisfied in the class of the object that you want to use as `T` in template class/function.
+
+=== Template Specialization
+This is another powerful feature of {cpp} templates.
+
+Sometimes a template won't work for a particular class:
+
+* Operator or function is missing, and you can't add it
+* Logic in the operator won't work for this case, for example, the operator is already used for another purpose.
+
+In that case, along with usual template code, you can add extra code that handles this special case related to a particular class type which you would like to use as `T` in the template.
+Writing this type of specialization is called template specialization.
