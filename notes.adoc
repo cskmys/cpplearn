@@ -27,6 +27,9 @@ For readability do not use shift operators in place of arithmetic operators when
 To provide access to a private member, public getter should be your first choice.
 Use friend if and only if you think adding a public getter is going to unnecessarily expose the variable to the whole world when in fact it is required by only one class.
 
+Do not use `protected` member variables as it tightly bind the base class with the inherited class.
+To have a decoupling put these `protected` member variables under `private` and write a `protected`/`public` getter for them in the base class, and use these getters in the inherited class.
+
 While using templates, if a particular operator doesn't make sense for the data type that you want to use in the template, then do template specialization instead of implementing the operator in the data type.
 
 For indirection, references should be your first choice instead of pointers.
@@ -43,3 +46,5 @@ To enhance readability use `const`-after style to write your constants.
 Remember, `const`-after style is read from right to left(with the exception "const reference to target").
 
 Never use raw arrays, use arrays from STL.
+
+As soon as you mark a class's function as `virtual` mark its destructor as `virtual` as well.

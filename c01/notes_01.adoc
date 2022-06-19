@@ -246,6 +246,13 @@ Hence, the inherited class can't see or access the `private` members of the base
 
 |====
 
+[NOTE]
+====
+Don't use `protected` for member variables, instead put them under `private`, and write a `protected`/`public` getter in the base class, and use it in the inherited class instead.
+This gives decoupling between the class variable members of the base class and the inherited class.
+Now, you can change the member variables of base class and manage the change within the public getter in base class without having to change the code of the inherited class.
+====
+
 === `enum`
 It is a construct used to associate unique names to a set of constants.
 Easy to forget constants, so better to use names under an enumeration.
