@@ -206,7 +206,7 @@ There are several error scenarios:
 * Never delete which will lead to memory leaks
 * Someone copies that pointer, and them using that pointer can lead to a host of issues mentioned above.
 
-Thumb rules for manual memory management
+Thumb rules for manual memory management(called as rule of five):
 
 * Whenever you create an object on heap, keep its pointer inside another object which calls delete, on all the pointers it has been given, in its destructor so that all pointers are cleaned up when it goes out of scope.
 
@@ -229,4 +229,42 @@ So the best solution is:
 
 * use STL as much as possible
 * design your class in such a way that you stick to local store as much as possible
+* if you still have to use free store:
+** Write copy and move to perform proper deep copies
+** use a smart pointer
 
+=== Smart Pointers
+Smart pointers work their way around the rule of five to give safe memory management.
+
+A smart pointer basically is a template class with following properties:
+
+* Just one member variable `T*`
+* Constructor saves a pointer variable in the member variable
+* Destructor will `delete` the member variable
+* Overload dereference operators(`*` and `->`) to give you the actual pointer
+* Does one of the following
+** Make copy and move impossible
+** Implements copy and move to perform reference counting
+
+==== `unique_ptr`
+This has very less overhead, but it is not copiable.
+It achieves this by:
+
+* making the copy constructor and copy assignment operator `private`, or
+* using `=delete` on copy constructor and copy assignment operator
+
+Hence, you cannot simply assign this pointer to wherever you want.
+`std::move` will need to be used to use it at multiple places.
+Whenever it goes out of scope, it automatically cleans up heap without leaving any memory leak.
+
+==== `shared_ptr`
+This is copiable.
+[NOTE]
+====
+If your design is good there are very rare instances when you'll need to use this.
+====
+Performs reference counting where each copy increments a counter, each copy that goes out of the scope decrements the counter in its destructor, and if used properly, the last one to go out of scope will have a count zero, and it will clean up the memory.
+
+==== `weak_ptr`
+Allows you to read a shared pointer without bumping the reference count.
+While `unique_ptr`, and `shared_ptr` makes sure that there is no memory leak, `weak_ptr` cannot do that.
