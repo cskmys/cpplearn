@@ -30,6 +30,7 @@ The https://en.cppreference.com/w/[wiki for {cpp}] lists everything related to t
 Standard library has a lot of useful classes, collections, smart pointer, and stream IOs etc.
 
 You can find a compiler https://isocpp.org/get-started[here].
+To try variety of {cpp} versions online https://wanbdbox.org[here].
 
 == Tools
 {cpp} is a general purpose language which can be used to build a variety of applications:
@@ -339,6 +340,9 @@ If you enable compiler optimization, you don't have to think about all this, mod
 Member functions should be marked as `const` unless you want to allow the member function to change the member variable.
 ====
 
+There is no such thing as a `const` free function coz if you don't want to modify any parameter within the function, you can just take the parameters as const references `const&` but in a member function you can modify member variables without need to pass them into the function.
+Hence, `const` member function exists but not `const` free function.
+
 === Parameters, and Return
 
 When you pass a parameter to a function or return from a function you can do it by:
@@ -510,3 +514,26 @@ They often rely on operator overloads.
 ====
 Much of the STL(standard template library) is template-based as the name suggests
 ====
+
+Templates are entirely written out in header files as the compiler needs to see them fully during preprocessing in order to generate the code for each version of the data type used by the template.
+
+[WARNING]
+====
+Do not write any template code in source file.
+All template code should be in header file.
+====
+
+Unlike Rust, {cpp} doesn't have a mechanism yet to annotate the conditions that need to be fulfilled by an object used as `T` in template class/function(or traits in Rust terminology).
+Hence, one will have to try to use an object as `T` in template class/function, and see if the compiler throws errors or not.
+If there are errors, you can implement the conditions that need to be satisfied in the class of the object that you want to use as `T` in template class/function.
+
+=== Template Specialization
+This is another powerful feature of {cpp} templates.
+
+Sometimes a template won't work for a particular class:
+
+* Operator or function is missing, and you can't add it
+* Logic in the operator won't work for this case, for example, the operator is already used for another purpose.
+
+In that case, along with usual template code, you can add extra code that handles this special case related to a particular class type which you would like to use as `T` in the template.
+Writing this type of specialization is called template specialization.

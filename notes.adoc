@@ -26,3 +26,5 @@ For readability do not use shift operators in place of arithmetic operators when
 
 To provide access to a private member, public getter should be your first choice.
 Use friend if and only if you think adding a public getter is going to unnecessarily expose the variable to the whole world when in fact it is required by only one class.
+
+While using templates, if a particular operator doesn't make sense for the data type that you want to use in the template, then do template specialization instead of implementing the operator in the data type.
