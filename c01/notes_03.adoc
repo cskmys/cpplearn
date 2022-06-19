@@ -155,3 +155,78 @@ int const& cri = i;
 ----
 so that you can read `const&` as one word "const-reference" and hence read `int const&` as "const-reference to int".
 ====
+
+== Memory Management
+
+=== Free store
+
+[NOTE]
+====
+Stack & local store are used interchangeably.
+Similarly, Heap & free store as well.
+====
+
+Local variables are allocated memory on stack when they are declared, and this memory is cleared when you return from the function in other words, the scope of the local variable ends.
+
+If you want to store variables beyond the scope of the function in which they are declared:
+
+* Create the variable on the heap, and keep the address to the heap location on the stack.
++
+This is automatically done by using `new` operator to instantiate the object.
+Now whatever, the constructor does it will be doing it on the heap.
++
+[NOTE]
+====
+Syntax will vary a little when you are doing `new` on raw array.
+But, when you are using modern {cpp}, you should never use raw arrays, and use arrays from STL.
+====
+
+* When you exit the function, you'll need to make sure that the address to the heap location is returned coz after exit the stack will be cleared, and the address of the heap location currently stored on the stack, will be lost.
++
+This is done by having a pointer as the return type.
+
+When you are done, and you do not need it anymore, you can manually call `delete` operator to trigger the destructor and then deallocate all the memory that was allocated on the heap.
+[WARNING]
+====
+The local pointer variable that was used to call `delete` will still contain the address to the deallocated heap location.
+So don't forget to reinitialize it to `nullptr` so that null checks can protect you.
+If you forget to reinitialize it to `nullptr`, then null checks cannot protect you, and you'll end up, dereferencing an illegal memory location, and reading junk and/or causing code crash.
+====
+[NOTE]
+====
+Doing `delete` on `nullptr` doesn't cause code crash.
+====
+
+Using `new` and `delete` is a manual way of memory management which is very tedious and error-prone.
+There are several error scenarios:
+
+* The local variable which contains the pointer goes out of scope, then you lose access to the object
+* Delete too soon meaning dereferencing an invalid pointer
+* Delete twice meaning doing delete on an invalid address
+* Never delete which will lead to memory leaks
+* Someone copies that pointer, and them using that pointer can lead to a host of issues mentioned above.
+
+Thumb rules for manual memory management
+
+* Whenever you create an object on heap, keep its pointer inside another object which calls delete, on all the pointers it has been given, in its destructor so that all pointers are cleaned up when it goes out of scope.
+
+* Don't do shallow copies of the object, do deep copies using copy constructor.
+This will prevent the copy pointer dereferencing the location after it has been deallocated via the original pointer.
+
+* Overload copy assignment operator to delete existing data and (deep) copy the new data that is being assigned.
+When you simply use the assignment operator without overloading it as mentioned above, the current pointer will take in the address of the pointer that is being assigned to it and its own address is lost.
+Once the address is lost, you can never free the memory.
+
+* If the resource in an object is expensive, deleting it while deleting the object and recreating it while creating a new object can be expensive.
+To avoid this, we can `move` it to another object using move constructor.
+
+* If the resource in an object is expensive, unlike overload copy assignment operator where you delete everything, and (deep) copy, you delete and (deep) copy only the inexpensive part, and you `move` the expensive resource.
+
+Hence, to make manual memory management less error-prone you'll need to write at least five functions some of which are complicated, and you will have to check for things such as self-assignment etc.
+All these make manual memory management painful.
+
+So the best solution is:
+
+* use STL as much as possible
+* design your class in such a way that you stick to local store as much as possible
+
