@@ -40,3 +40,5 @@ If you want your indirection to never be invalid/null, then use references.
 Your default way to write all variables, arguments, functions, members etc. should be with `const` until you no longer can.
 
 To enhance readability use `const`-after style to write your constants.
+Remember, `const`-after style is read from right to left(with the exception of const reference to target).
+
