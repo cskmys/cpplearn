@@ -1,5 +1,9 @@
 == Indirection
 
+As {cpp} is a strongly typed language, even the references and pointers have a type.
+They cannot simply point to anything.
+They'll need to point to the target type that was mention during declaration.
+
 === Reference
 
 A reference is an alias for a target variable.
@@ -27,3 +31,127 @@ If you want to make sure that your pointer is never null/invalid, then probably 
 ====
 
 Special punctuation is required to perform action on the target(called dereferencing), otherwise the operation performed will be interpreted as being performed on the address of the target.
+
+== Const
+
+To commit to a compiler that you won't change something:
+
+[WARNING]
+====
+Make sure to have `const` correctness from the very beginning.
+Achieving `const` correctness later is often tedious and difficult.
+====
+
+[TIP]
+====
+Your default way to write all variables, arguments, functions, members etc. should be with `const` until you no longer can.
+====
+
+* When declaring a local variable
++
+----
+int const val = 1.717 // read as "constant integer"
+----
+
+* When passing a parameter:
+
+** Pass by value
++
+----
+int foo(int const b);
+----
++
+here `b` is copied anyway, so even if it changes, there's no harm to the original value.
+however, if you still want to conceptually make sure that the logic doesn't need to make any changes to any parameters, you can do this way.
+
+** Pass by reference
++
+----
+int foo(int const& b); // read as "constant reference to integer"
+----
++
+here `b` is reference, hence it is not copied and there is a potential for modification of the original value.
+Adding `const` before a reference, will make sure that the original value is never modified via this reference.
++
+Reference to a const is not allowed coz the reference unless declared as const should allow the change of target value but if the target value is a const then there's no way that it can be changed.
+Therefore, reference to a const is a paradox and hence, it is not allowed.
++
+const reference to a const value comes within the above const reference to value as if the reference is constant, then there is no way that you can change it regardless of the target is constant or not.
+Hence, we do not have a special case for this.
+
+** Pass by pointer
++
+You can pass
+
+*** `const` pointer to a target:
++
+----
+int foo(int * const b); // read as "constant pointer to integer"
+----
++
+same logic as const reference.
+
+*** Pointer to `const` target:
++
+----
+int foo(int const * b); //  read as "pointer to constant integer"
+----
++
+Here pointer can be reassigned to point to another address but the target that it points to must be a constant.
+
+*** `const` pointer to `const`
++
+----
+int foo(const int * const b); // read as "constant pointer to constant integer"
+----
++
+here you cannot change both the pointer and the data that it points to.
+
+* When using a member function:
++
+----
+int foo() const;
+----
++
+when you have a member function, it can directly access member variables without passing them as arguments.
+If something was passed as argument, then we can use `const` with argument to make sure that it is not modified.
+To make sure that member function doesn't modify member variable, we qualify the member function itself as `const`.
+
+=== Style
+`const` can be written before or after, for example:
+----
+const int ci = 3; // const-before style
+----
+is same as:
+----
+int const ci = 3; // const-after style
+----
+for the compiler.
+
+For us, using const-after enhances readability as shown previously, especially when using with pointers.
+You just need to read it from lhs to rhs.
+
+The only confusing exception would be "const reference to a target" which is written as:
+----
+int const & cri = i;
+----
+instead of:
+----
+int & const cri = i;
+----
+But, as "const reference to const target" is covered under "const reference to target", and as there is no "reference to a const target", we don't need to worry about this.
+If we remember just this one exception to style, it is good enough.
+
+[TIP]
+====
+Instead of writing:
+----
+int const & cri = i;
+----
+and reading it as reference to const int,
+write it as:
+----
+int const& cri = i;
+----
+so that you can read `const&` as one word "const-reference" and hence read `int const&` as "const-reference to int".
+====
