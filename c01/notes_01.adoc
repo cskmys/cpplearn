@@ -13,11 +13,21 @@ Modern {cpp} is way different from older {cpp}.
 
 {cpp} doesn't belong to a person or a company.
 The https://isocpp.org[standards committee] defines the language and compiler vendors implement their compiler as per this standard.
+
+
+Since last decade, there has been a new version of {cpp} every 3 years.
+{cpp}99 was just a minor bug fixes on {cpp}98
+{cpp}11 was the biggest change to the language.
+
+.{cpp} Evolution
+image::rsrcs/pix/20.06.2022_04.12.19_REC.png[CPPEvol]
+
 [IMPORTANT]
 ====
 Backward compatibility is maintained between all versions of the language.
 Hence, no need to worry about code compilation when moving to a new version of the language.
 ====
+
 Different vendors reach 100% compliance at different pace.
 The big 3 compilers are GCC, clang, MSVC.
 Generally, you don't have to worry about this as most compilers will eventually reach there.
@@ -160,7 +170,8 @@ This way you can never forget to release a particular resource when the object u
 
 ==== Building
 
-image::rsrcs/pix/18.06.2022_23.42.14_REC.png[]
+.Build Process
+image::rsrcs/pix/18.06.2022_23.42.14_REC.png[BuildProc]
 
 You'll need to declare a class/function in the header and include it in the source file where you implement or instantiate/call it.
 Keep a class's implementation in a single source file.

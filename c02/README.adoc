@@ -1,0 +1,9 @@
+= README
+
+https://app.pluralsight.com/library/courses/cplusplus-17-beyond-the-basics/[C++17: Beyond the Basics] from pluralsight
+
+[NOTE]
+====
+New things related to topics already present in c01, are added there itself.
+Only things that were not in c01, are added here.
+====

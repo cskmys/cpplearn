@@ -1,0 +1,26 @@
+== Overview
+
+{cpp} is a powerful language and many people stop after learning the basics.
+They continue to write it like one of the languages that they are already familiar with instead of using more advanced parts of the language and STL.
+
+Modern {cpp} is:
+
+* Expressive: you can choose keywords and constructs that suit specific needs.
+For example, a range-based for loop used to iterate over a collection expresses the intent to the reader more clearly than other methods.
+
+* Feature-rich: Lambdas, templates, const, smart pointers, stl classes, and all other features makes you more productive and gives you a host of benefits.
+So don't use {cpp} as C with classes
+
+* Readable: Easy to understand.
+Don't make optimizations, go for readability of the code.
+The modern compiler is powerful enough to make the optimizations much better than what you can write.
+
+* written using stack semantics: you would rarely need raw pointers and manually memory management.
+Almost all code uses objects on the stack some of which maybe smart pointers that encapsulates raw pointers.
+
+{cpp} standard library is not the biggest standard library when compared to other languages, however it is growing.
+
+[NOTE]
+====
+You don't need to force yourself to use every single modern feature, but make it a point to not ignore the modern feature when it is right solution for your problem.
+====
