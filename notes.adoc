@@ -68,3 +68,9 @@ When you think you want to use `std::list` for performance reasons, start with `
 
 Try to write your code in such a way that it is easy to switch containers.
 In other words, use iterators, `auto`, and STL algorithms etc.
+
+Forget about function pointers and function objects, use lambdas instead.
+
+Just capture everything by value/reference in the capture clause, and then list whatever you want to do otherwise.
+
+In the lambda declaration, if the object that needs to be capture is not very big, capture it by value, and if you want to mutate the object that you capture, capture it by reference.

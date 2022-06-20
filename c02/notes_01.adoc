@@ -94,3 +94,97 @@ Hence, a lot of the code will work unchanged by simply renaming a `vector` varia
 ** `priority_queue`
 
 To discover more go to https://en.cppreference.com/w/cpp/container[here].
+
+== Lambda
+
+A lambda is an expression that holds code to do something.
+This can be stored in a variable and passed to another function.
+[TIP]
+====
+The type of lambda is very complicated to write, so better use `auto`.
+====
+
+* This is required for generic work.
+* Used widely in functional programming style and concurrency.
+
+The compiler generates a class. from the lambda definition, containing 3 parts:
+
+* Capture clause: class member variables
+* Parameters: class method parameters
+* Function body: class method body
+
+From the lambda execution compiler generates code to instantiate the class and call the method.
+
+=== Is lambda really required?
+
+Whatever a lambda does, the same can be done by function objects(functors) or functions passed to function pointers.
+Function pointers are difficult to read, and write and the functions that are passed to it are implemented elsewhere.
+
+But lambdas are easy to understand, and they keep the code where it is used.
+As all code is kept in place:
+
+* Code is clean and easy to read
+* It is easier to express the intent
+* You can have the confidence to change it as no-one else will use this
+
+Considering all the benefits above, we can forget about functors, and function pointers, and use lambda.
+Though lambda didn't introduce anything new in terms of capability to the language, it made the capabilities more accessible.
+
+=== Parts of a lambda
+
+==== The capture
+
+When you want something from the calling scope to be accessible within the lambda, you need to use the capture clause to capture it.
+You can capture by:
+
+* value:
++
+Now just like pass by value, a copy of the variable is made during the time of capture.
+This internal copy has nothing to do with the original variable and the same copy will be used any number of times that you execute the lambda, even after the original variable has gone out of scope.
+Unless the keyword `mutable` is used, this internal copy cannot be changed by the code within the lambda as well.
+Hence, by default, the variables that were capture by copy behave as `const` within the lambda.
+
+* reference:
++
+Now no copy is made, and you can modify the target variable.
+However, there is a possibility to have dangling references, for example, when you have passed the lambda to another thread and the reference in the thread where reference was captured has gone out of scope.
++
+Here, as no copy is made, and we cannot re-initialize references anyway, hence `mutable` is irrelevant.
+
+* alias
++
+`[a=y + 1]`
+
+* move
++
+`[std::move(b)]` is used when you have the potential for a dangling reference.
+
+Even when you tell the lambda to capture everything in the calling scope by value or reference, the compiler generates code capturing only whatever you are using in the lambda.
+
+[TIP]
+====
+Just capture everything by value/reference in the capture clause, and then list whatever you want to do otherwise.
+====
+
+If you are not putting the lambda into a variable, then capture it by value/reference based on the size of the object you are capturing.
+
+If you are storing the lambda in a variable and passing it elsewhere, and if there's a potential for dangling reference, then capture by value.
+
+==== return
+
+Lambdas may return a value.
+
+The type of return can normally be inferred by the compiler.
+Sometimes, they cannot, for example, when you return `int` in one place and `double` in another place within the lambda.
+In such cases the developer needs to specify.
+In the given example, the developer will need to specify the return type as `double` by doing:
+----
+[...](...) -> double { ... }
+----
+
+Whenever the lambda is passed as a predicate its return type must match the type that is expected by whoever executes it, in other words, whoever executes it will impose the return type.
+
+==== Parameters
+
+Lambdas take the parameter from whoever executes it.
+Hence, the parameter type must match the type given by whoever executes it, in other words, whoever executes it will impose the parameter type.
