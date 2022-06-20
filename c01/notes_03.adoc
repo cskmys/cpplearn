@@ -294,3 +294,31 @@ Having a `virtual` function comes with a cost both in terms of memory and runtim
 When you are using a reference or pointer of a class's parent, you cannot call the functions that are present in the class but not present in its parent.
 
 The same rules apply to smart pointers as well.
+
+=== Slicing
+One downside to indirection and inheritance is slicing.
+
+A base class may not have all the features of a derived class, hence a base class cannot be copied into derived class.
+[IMPORTANT]
+====
+You can overload the assignment operator to copy the base class into derived class and initialize the additional object in the derived class with some (defaults) values.
+But, you don't get this without writing any code.
+====
+But, derived class has all the properties of the base class, hence you can copy derived class into a base class.
+But, you lose access to the extra members in the derived class.
+This is called slicing.
+
+Slicing causes memory leak.
+Moreover, when this slicing occurs, you even lose the virtual table information.
+Hence. when you make a function call, you always get the function call of the base class even if the function is marked as `virtual` in the base class.
+Hence, polymorphism is lost.
+
+One simple solution is to not copy the derived class object into the base class object.
+But, this is not fully avoidable coz sometimes you may need to pass by value a derived class to a base class parameter in a function call.
+As the derived class is passed by value, a copy will be made, as it is passed to a base class parameter, slicing will happen on the copy.
+
+To avoid this issue, use references or pointers when passing a derived class to a function.
+[TIP]
+====
+If you design your code well, you'll almost always not require a base class pointer as a parameter, just the base class reference will suffice.
+====

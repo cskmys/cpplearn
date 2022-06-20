@@ -1,5 +1,9 @@
 = Notes
 
+Never leave any variables uninitialized.
+
+Never forget return statements.
+
 Use `default` for default constructors to initialize with all default values instead of junk.
 
 Use safe casts instead of C-style round-bracketed cast which is unsafe.
@@ -48,3 +52,6 @@ Remember, `const`-after style is read from right to left(with the exception "con
 Never use raw arrays, use arrays from STL.
 
 As soon as you mark a class's function as `virtual` mark its destructor as `virtual` as well.
+
+Do not ever pass a derived class by value to base class parameter in a function call.
+Always, pass the derived class via a reference or a pointer to the base class parameter in a function call to avoid slicing.
