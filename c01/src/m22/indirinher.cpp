@@ -55,4 +55,6 @@ int main(){
 
     cout << "rTSidStark: " << rTSidStark.getNameVir() << endl;
     cout << "pTSidStark: " << pTSidStark->getNameVir() << endl;
+
+    return 0;
 }

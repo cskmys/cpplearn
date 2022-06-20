@@ -16,4 +16,5 @@ int main(){
     cout << someoneWoVirDes->getName() << endl;
     delete someoneWoVirDes;
 
+    return 0;
 }
