@@ -102,7 +102,7 @@ Here pointer can be reassigned to point to another address but the target that i
 *** `const` pointer to `const`
 +
 ----
-int foo(const int * const b); // read as "constant pointer to constant integer"
+int foo(int const * const b); // read as "constant pointer to constant integer"
 ----
 +
 here you cannot change both the pointer and the data that it points to.
@@ -129,7 +129,7 @@ int const ci = 3; // const-after style
 for the compiler.
 
 For us, using const-after enhances readability as shown previously, especially when using with pointers.
-You just need to read it from lhs to rhs.
+You just need to read it from lhs to rhs while reading and while writing it you just need to add `const` after the thing that will not change.
 
 The only confusing exception would be "const reference to a target" which is written as:
 ----
