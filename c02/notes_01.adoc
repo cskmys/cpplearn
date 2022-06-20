@@ -24,3 +24,73 @@ Almost all code uses objects on the stack some of which maybe smart pointers tha
 ====
 You don't need to force yourself to use every single modern feature, but make it a point to not ignore the modern feature when it is right solution for your problem.
 ====
+
+== STL Containers
+Containers that are already implemented in the STL is a great alternative to C-style arrays to manage collections.
+
+* There are a lot of varieties of containers catering to different needs.
+* Huge number of methods to handle various needs.
+* They know their size and manage themselves hence they are less error-prone.
+* Throws exceptions when you do something invalid.
+* They work very well with the STL algorithms.
+* You don't have to manage memory, they manage it themselves, and they work well with smart pointers.
+* Type safety prevents you from accidentally putting invalid type into your collection
+* Very expressive, meaning those who read the code will right away know what exactly the code is doing
+
+=== `vector`
+`vector` should be your goto container.
+
+[TIP]
+====
+If you are not sure, use `vector`.
+====
+
+It starts with a size 1 and as you add more elements it doubles in size and grows itself.
+This type of growing requires vector to use memory on heap.
+But as it cleans up after itself, we don't really need to worry about that.
+
+It stores everything in consecutive memory locations.
+Hence, indexing and random access is very fast.
+You can traverse using iterators or do random access via `[]`.
+All this makes vector high performance.
+
+But, if the vector holds objects, then while growing the vector will require making new copies to push into the array and destroying old copies in the old array.
+This will incur performance cost.
+
+So vector's performance depends on how you use it, and what you store in it.
+
+=== `array`
+`array` can be seen as `vector` that never grows.
+As `array` size is known in compile-time it is stored on stack.
+
+=== `list`
+`list` is a linked list.
+Hence, each element knows where to find the next one.
+So, elements are not required to be stored in contiguous locations.
+Hence, when you add an element in the middle you don't need to move around all other elements, only the element preceding it (and probably succeeding it, if it's a doubly linked list) will need to be updated to point to it.
+
+Hence, this efficient in memory but traversing and indexing is expensive.
+Sorting is even more expensive as you'll need to change everyone's pointers.
+
+[TIP]
+====
+Even if you think you need `list`, start with `vector` and check the performance and then go for the `list`.
+A huge majority of the `list` APIs are same as `vector`.
+Hence, a lot of the code will work unchanged by simply renaming a `vector` variable as `list`.
+====
+
+=== Other collections
+
+* Other popular dynamic collections
+** `map` is kept sorted and keys must be unique
+*** `unordered_map` will not sort keys, hence faster insertion
+** `multimap` allows collisions
+*** `unordered_multimap` to have unsorted keys
+
+* Some more collections
+** `stack`
+** `queue`
+** `dequeue`
+** `priority_queue`
+
+To discover more go to https://en.cppreference.com/w/cpp/container[here].

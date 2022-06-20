@@ -61,3 +61,10 @@ Don't ever use C-style casts, use {cpp}'s `static_cast` when you are absolutely 
 After doing `dynamic_cast` of pointers do not forget to check for null.
 
 Do not ever use `const_cast`.
+
+If you want an array that expands use `std::vector` otherwise use `std::array`.
+
+When you think you want to use `std::list` for performance reasons, start with `std::vector`  measure, switch to `std::list` and compare its performance with `std::vector`.
+
+Try to write your code in such a way that it is easy to switch containers.
+In other words, use iterators, `auto`, and STL algorithms etc.
