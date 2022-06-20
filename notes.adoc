@@ -55,3 +55,9 @@ As soon as you mark a class's function as `virtual` mark its destructor as `virt
 
 Do not ever pass a derived class by value to base class parameter in a function call.
 Always, pass the derived class via a reference or a pointer to the base class parameter in a function call to avoid slicing.
+
+Don't ever use C-style casts, use {cpp}'s `static_cast` when you are absolutely sure of the casting and `dynamic_cast` when you are not very sure.
+
+After doing `dynamic_cast` of pointers do not forget to check for null.
+
+Do not ever use `const_cast`.

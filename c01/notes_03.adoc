@@ -322,3 +322,49 @@ To avoid this issue, use references or pointers when passing a derived class to 
 ====
 If you design your code well, you'll almost always not require a base class pointer as a parameter, just the base class reference will suffice.
 ====
+
+=== Casting
+You can cast a base class pointer as a derived class pointer to call derived class methods.
+If the base class pointer is not pointing to the specific derived class pointer, then your data will get corrupted and/or code will crash.
+
+This type of casting is super dangerous, and a C-style cast has no way of avoiding this at the compile-time or run-time.
+{cpp} casts are far more intelligent and notify this kind of runtime issues at compile time or run-time.
+
+==== `static_cast`
+`static_cast` happens at compile time.
+It is used by the programmer to explicitly tell the compiler to not worry about a particular type conversion.
+
+==== `dynamic_cast`
+`dynamic_cast` happens at runtime.
+
+Before casting, during runtime, it checks for the existence of a virtual table of proper type.
+If there is a proper virtual table, it performs the cast, and if there is no virtual table, the cast fails returning a null.
+Hence, after doing `dynamic_cast` do not forget to check for null.
+[TIP]
+====
+Use this when you are not sure of the data type of the object that might be passed.
+====
+[TIP]
+====
+A `dynamic_cast` can be used to figure out the actual data type.
+Try to convert the base class type to number of inherited data types, whichever succeeds, is the actual type.
+====
+
+This is slower but much safer.
+
+==== `const_cast`
+`const_cast` is used to get around the `const` by casting it away.
+It's too powerful, and too deceptive.
+[WARNING]
+====
+Never ever use `const_cast`.
+====
+
+==== `reinterpret_cast`
+`reinterpret_cast` is used to interpret the bits of one data type as the bits of another data type i.e. for bit-twiddling.
+For example, interpret signed char as unsigned char.
+[WARNING]
+====
+Bit-twiddling is dangerous, so be careful when you use it.
+====
+When you are dealing with inheritance and indirection, this cast is irrelevant.
