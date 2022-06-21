@@ -74,3 +74,12 @@ Forget about function pointers and function objects, use lambdas instead.
 Just capture everything by value/reference in the capture clause, and then list whatever you want to do otherwise.
 
 In the lambda declaration, if the object that needs to be capture is not very big, capture it by value, and if you want to mutate the object that you capture, capture it by reference.
+
+When you are using verbs such as find, sort, generate, remove etc. it is highly likely that an STL algorithm implementation for it already exists.
+So never implemented anything on containers without thoroughly checking STL algorithms.
+
+Stop writing raw loops and use STL algorithms to prevent both obvious mistakes and subtle mistakes such as iterating over the very container that you are modifying.
+
+Using STL algorithms gives you interchangeability between `vector`, and `list`.
+
+By using STL containers, algorithms and iterators, you can focus on what to acheive rather than how to achieve it.

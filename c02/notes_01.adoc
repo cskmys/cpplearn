@@ -188,3 +188,49 @@ Whenever the lambda is passed as a predicate its return type must match the type
 
 Lambdas take the parameter from whoever executes it.
 Hence, the parameter type must match the type given by whoever executes it, in other words, whoever executes it will impose the parameter type.
+
+== STL Algorithms
+
+Not everything that you want to do with a container is a member function of that very container.
+Several things that you normally want to do on a container is located in another part of the standard library.
+
+For example, you cannot find a method to locate an element in a `vector` in its public definitions.
+The ability to find an element is present in `<algorithm>` which contains a lot of templates, which can work on any containers.
+When you use one of the classes from `<algorithm>` and pass your `vector` to it, you get the functionality you are looking for.
+
+To connect `<algorithm>` and container, iterators are used.
+Iterators are mistakenly confused with pointers by a lot of developers, and they shy away from it.
+But, in reality iterators not only helps to interface the containers and algorithms but also helps write safe code.
+
+[NOTE]
+====
+This kind of separation between containers, iterators, and algorithms in STL makes room for countless number of permutations, and combinations between them.
+Hence, a vast array of features can be obtained without bloating the containers.
+====
+
+When you use STL containers, iterators, and algorithms, you can eliminate a lot of messy loops and decision-making statements and continue/break.
+Also, different people write these in different ways.
+For example, some may use iterators instead of `[]` for iterating.
+All these makes it necessary that you spend time to understand even simple things.
+
+Very often you can write everything you want to do in a single/few line(s) using a function, with a clear name, from the STL algorithms.
+Hence, nobody will need to read the whole loop to understand what you are doing, the code becomes very clear, readable and expresses the intent very well.
+Moreover, STL is well tested for edge cases and highly optimized for performance.
+Hence, it is probably better than what you would write.
+[TIP]
+====
+When you are using verbs such as find, sort, generate, remove etc. it is highly likely that an STL algorithm implementation for it already exists.
+====
+
+Using STL algorithms prevents you from making subtle mistakes such as iterating over the very container that you are modifying either via indexing or an iterator.
+
+[IMPORTANT]
+====
+Stop writing raw loops, and figure out the STL algorithm.
+====
+
+Most STL algorithms work with most iterators.
+Hence, even if you change your container, all your algorithms still work.
+
+To search for available methods go https://en.cppreference.com/w/cpp/algorithm[here].
+For more learning on STL algorithms you can do this https://app.pluralsight.com/library/courses/beautiful-cplusplus-stl-algorithms/[course].
