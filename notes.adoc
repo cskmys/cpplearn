@@ -82,4 +82,10 @@ Stop writing raw loops and use STL algorithms to prevent both obvious mistakes a
 
 Using STL algorithms gives you interchangeability between `vector`, and `list`.
 
-By using STL containers, algorithms and iterators, you can focus on what to acheive rather than how to achieve it.
+By using STL containers, algorithms and iterators, you can focus on what to achieve rather than how to achieve it.
+
+A better memory management design is one which does one of the following(in the order of precedence):
+
+* if possible just use rule of zero
+* if not possible but the member variable type is movable, use rule of five
+* if type is non-movable, use rule of three
