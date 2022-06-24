@@ -64,7 +64,7 @@ void mkLst(int const& size, list<int>& l){
 }
 
 int main(){
-    int const size = 10'000;
+    int const size = 10000; // 10'000 is available only on >= C++14
 
     vector<int> v;
     v.push_back(0);
