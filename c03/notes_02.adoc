@@ -11,10 +11,12 @@ Many believe it is an anti-pattern meaning not a good design pattern to use.
 But still it is useful for maintain a global state in the program, which is accessed and probably modified by other modules, at a central location.
 
 === Builder
+This is most commonly used creational pattern.
 
-Builder simplifies complex object creation, and initialization/configuration.
+Builder simplifies complex object creation.
 
-Instead of using long and complex constructors, builder allows you to create, and configure objects step-by-step by calling one method call at a time.
+Instead of using long and complex constructors, builder allows you to create, and configure objects step-by-step  in a declarative manner by calling one method call at a time.
+Hence, it allows you to customize object construction.
 
 === Prototype
 
