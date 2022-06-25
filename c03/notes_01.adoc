@@ -1,0 +1,373 @@
+== Intro
+
+Creational patterns are key when it comes to establishing patterns around object creation and object lifecycle.
+
+Modern {cpp} makes it very easy to implement and use creational patterns.
+
+== SOLID
+
+SOLID is a set of OOP design principles that aim to help write code that is easily:
+
+* extensible:
++
+Especially important if you are writing library or code that will be used by others.
+
+* maintainable:
++
+A small change in logic should not require you to make changes at 5 different places in code
+
+* reusable.
++
+The more generic and abstract your code is, the more pluggable it is.
+
+=== Single responsibility
+The most valuable principle of all.
+A class or module or component must focus on doing one thing and one thing only.
+
+ * Helps avoid writing "spaghetti" code, code that is tangled, and mixed up with various things.
+Ensures that your code is easier to follow logically.
+
+* Helps avoid writing "swiss-army knife" classes.
+Hence, it allows you to implement proper separation of concerns.
+This makes your code easy to change, and easier to test.
+
+* Makes your code easy to maintain.
+With proper separation, a larger code base can be easily seperated between teams to handle it.
+
+==== What not to do
+[source,cpp]
+----
+class CoffeeMachine {
+    ...
+    void PourCoffee(){ // <1>
+        cout << "Pouring coffee" << endl;
+    }
+
+    void SendCoffeeMetrics(){ // <2>
+        cout << "Sending metrics" << endl;
+        ...
+        request.uri("/metrics");
+        ...
+        request.perform();
+    }
+}
+----
+<1> `PourCoffee` belongs here as it contains code that is specific to the responsibility of `CoffeeMachine`
+
+<2> `SendCoffeeMetrics` being in `CoffeeMachine` itself is not a problem.
+However, `SendCoffeeMetrics` containing the implementation details about how to send the metrics is the problem coz any change related to how the metrics are managed will require a change here.
++
+[WARNING]
+====
+Writing such specific implementation details makes it harder to test
+====
+
+==== What to do
+[source,cpp]
+----
+class CoffeeService { // <1>
+    ...
+    SendMetrics(Metrics m){
+        ...
+        request.uri("/metrics");
+        ...
+        request.perform();
+    }
+};
+class CoffeeMachine {
+    ...
+    void PourCoffee(){
+        cout << "Pouring coffee" << endl;
+    }
+
+    void SendCoffeeMetrics(){ // <2>
+        cout << "Sending metrics" << endl;
+        ...
+        coffeeService.SendMetrics(metrics);
+    }
+};
+----
+<1> Now, `CoffeeService` class takes care of how the metrics are sent.
+Any change in the mechanism of how metrics are managed will incur change only in this class and not in `CoffeeMachine` class.
+
+<2> `CoffeeMachine::SendCoffeeMetrics` doesn't contain any information on how the metrics are sent.
+Now, `CoffeeService` class takes care of this.
++
+[NOTE]
+====
+Though we have introduced a dependency, now `CoffeeMachine` being dependent on `CoffeeService`, The code of `CoffeeMachine` is still easier to test.
+We can simply stub `CoffeeService` class.
+====
+
+=== Open-closed
+Your code should be open for extension but closed for direct modification meaning it should be easy to extend a class's behavior without changing the code of the class itself.
+
+* Adding new use cases to requirements will not require changing existing code.
+The logic is generic enough for you to extend the existing code to more use cases.
+
+* Helps prevent direct code changes in favor of extending existing APIs.
+Hence, leads to well-defined APIs.
+This is important for shareable and reusable code.
+
+* Extending existing code, will make code reusable, and cuts down on redundant code.
+
+==== What not to do
+[source,cpp]
+----
+class CoffeeMachine {
+    ...
+    private:
+        vector<int> settings = {1, 2, 3}; // <1>
+    ...
+    void RoastBySetting(int setting){
+        ...
+        switch(setting){ // <2>
+            ...
+        }
+    }
+};
+----
+<1> `CoffeeMachine::settings` are fixed.
+Anytime a new roast setting needs to be added, this code needs to update.
+
+<2> `CoffeeMachine::RoastBySetting` directly relies upon fixed settings, hence any addition to `CoffeeMachine::settings` will require code change here as well.
+
+Hence, you'll need to directly modify the class to add the settings.
+So, it is not closed for modification and open for extension.
+
+==== What to do
+[source,cpp]
+----
+class RoastingService {
+    ...
+    void Roast(RoastSetting const& setting){
+        ...
+    }
+};
+
+class CoffeeMachine {
+    ...
+    void RoastBySetting(RoastSetting setting){
+        ...
+        roastingService.Roast(&setting);
+    }
+};
+----
+
+When you add new `RoastSetting`, `CoffeeMachine` need not be changed.
+
+// But don't you need to `RoastSetting`, and probably `RoastService` as well?
+// I don't know it just looks like instead of making all the changes in one class you are making changes at multiple classes.
+// but this is a toy example don't worry, have patience, we will see.
+
+=== Liskov substitution principle
+
+This is used for behavioral subtyping which allows you to write more generic code.
+A class that inherits from a class will still have all the capabilities of the base class, hence a reference or a pointer of the base class can be used with the inherited class.
+
+* You'll get flexibility to use different types.
+
+* Well-defined abstractions which requires a minimum contract to follow
+
+* Helps to reuse and extend the code
+
+==== What to do
+[source,cpp]
+----
+class Roaster { // <1>
+    public:
+        virtual void Roast();
+};
+
+class CoffeeRoaster : Roaster { // <2>
+    public:
+        void Roast(){
+            // specific coffee implementation
+        }
+};
+
+class EspressoRoaster : Roaster {
+    public:
+        void Roast(){
+            // specific espresso implementation // <3>
+        }
+};
+
+class RoastingService {
+    ...
+    void Roast(Roaster const& roaster){
+        roaster.roast(); // <4>
+    }
+};
+----
+<1> Abstract base class that just defines the behavior
+<2> Derived concrete class that implements the base class behavior
+<3> Each derived class implement the behavior in their own way
+<4> The code that uses this, need not worry about underlying derived class.
+
+=== Interface segregation
+
+Clients using your code should not be forced to depend upon methods or other abstractions that they don't need.
+Clients should use just what they need.
+Hence, it is always better to have multiple, separate and specific interfaces than one big giant interface for everything.
+
+* Can reduce compile time as clients will use just what they need instead of a lot of extraneous code.
+
+* It is far easy to maintain well-segregated multiple interfaces than one giant interface.
+
+* Enforces proper separation of concerns
+
+==== What not to do
+[code, cpp]
+----
+class Machine { // <1>
+    public:
+        virtual void Roast();
+        virtual void Pour();
+        virtual void Grind();
+};
+
+class AllInOneCoffeeMachine : Machine { // <2>
+    public:
+        void Roast(){
+            ...
+        }
+        void Pour(){
+            ...
+        }
+        void Grind(){
+            ...
+        }
+};
+
+class SimpleCoffeeMachine : Machine { // <3>
+    public:
+        void Roast(){
+            // not needed and has to be implemented // <4>
+        }
+        void Pour(){
+            ... // only method that is needed
+        }
+        void Grind(){
+            // not needed and has to be implemented
+        }
+};
+----
+
+<1> Base abstract interface
+<2> Requires all methods of interface and is happy to implement all of that
+<3> Doesn't require all methods of interface and is being forced to implement all of that
+<4> One possible implementation would be to throw an exception, but again it was not required in the first place.
+
+==== What not to do
+[code, cpp]
+----
+class Roaster { // <1>
+    public:
+        virtual void Roast(); // <2>
+};
+
+class Pourer {
+    public:
+        virtual void Pour();
+};
+
+class Grinder {
+    public:
+        virtual void Grind();
+};
+
+class RobustMachine : Roaster, Pourer, Grinder { // <3>
+    // <4>
+};
+
+class AllInOneCoffeeMachine : RobustMachine { // <5>
+    public:
+        void Roast(){
+            ...
+        }
+        void Pour(){
+            ...
+        }
+        void Grind(){
+            ...
+        }
+};
+
+class SimpleCoffeeMachine : Pourer { // <4>
+    public:
+        void Pour(){
+            ... // only method that is needed
+        }
+};
+----
+<1> One interface for each behavior
+<2> In practice, there will be more than one method
+<3> A complex interface can be constructed for a complex machine by inheriting from multiple interfaces
+<4> A complex machine will implement all the functionality brought in from complex interface
+<5> A simpler machine that inherits only one interface, and hence implements it
+
+=== Dependency inversion
+
+Modules/classes higher up the chain should not directly depend upon lower‑level modules.
+But instead, both the higher and lower level modules should depend upon a separate abstraction.
+
+This facilitates and ensure code:
+
+* Loosely coupled software
+
+* Much more reusable code
+
+* Proper separation of concerns
+
+==== What not to do
+[code, cpp]
+----
+class CoffeeMachine { // <1>
+    ...
+    vector<int> status;
+    ...
+};
+
+class CoffeeTest {
+    void Start(CoffeeMachine &machine){ // <2>
+        for(auto bit : machine.staus){ // <3>
+            // operate on status bits
+        }
+    }
+};
+----
+<1> low-level module
+<2> high-level module
+<3> high-level module directly depends on low-level module, hence, the high-level module will need to change its code when the low-level module changes its implementation.
+For example, if `CoffeeMachine::status` type is changed from `vector<int>` to `set<int>`, then `CoffeeTest::Start` will need change as well.
+
+==== What to do
+[code, cpp]
+----
+class CoffeeStatusReader { // <1>
+    virtual void ReadStatus();
+};
+
+class CoffeeMachine : CoffeeStatusReader {
+    vector<int> status;
+    void ReadStatus(){ // <2>
+        for(auto bit : status){
+            ...
+        }
+    }
+};
+
+class CoffeeTest { // <3>
+    void Start(CoffeeStatusReader & reader) {
+        reader.ReadStatus();
+    }
+};
+----
+<1> shared abstraction used by both the high-level and low-level module
+<2> low-level module now implements the shared abstraction
+<3> high-level module no longer directly depends upon the high level module, it rather works on the shared abstraction.
+Hence, now the low-level functionality in low-level module can change without requiring high-level module to change as well.
+
+
+
