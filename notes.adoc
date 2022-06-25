@@ -107,3 +107,4 @@ If you mark `noexcept` and yet there is an exception, the program ends and there
 
 Mark move constructor, and move assignment operator with `noexcept`
 
+Follow SOLID
