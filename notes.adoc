@@ -89,3 +89,21 @@ A better memory management design is one which does one of the following(in the 
 * if possible just use rule of zero
 * if not possible but the member variable type is movable, use rule of five
 * if type is non-movable, use rule of three
+
+Never use exceptions to handle data validation and other predictable issues.
+They should be purely reserved for unpredictable and rare errors such as "Disk full", "Network lost" etc.
+
+Exception can be helpful when you have a really deep calling hierarchy.
+
+Anything you declare in the `try` is cleaned up before you run the first line of `catch`.
+
+Always catch exceptions by reference to avoid slicing.
+
+Catch specific exceptions first, and then generic.
+
+Use classes in stl exception, try to avoid writing your own.
+
+If you mark `noexcept` and yet there is an exception, the program ends and there is no stack unwinding.
+
+Mark move constructor, and move assignment operator with `noexcept`
+

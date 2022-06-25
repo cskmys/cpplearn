@@ -155,3 +155,120 @@ In summary, just write all five unless you want to follow rule of zero.
 Use member variables that manage themselves for example stl containers, and smart pointers etc.
 Then you'll not have to write destructor and hence, you don't have to write copy and move constructors and assignment operators.
 
+== Exceptions
+
+Not every action succeeds.
+Errors and failure happen.
+Some are predictable while others are not.
+Different errors can be handled different ways.
+
+=== Expected Errors
+Simples way to handle expected errors is to test for them using a conditional statement.
+You should deal with them on the spot wherever they are discovered.
+In summary, check first and notify(if possible), don't do something impossible/potentially harmful(that should be your last resort).
+
+Sometimes the code that finds the problem might be deep in the library and cannot deal with it(especially as per your business logic).
+In that case as long as it returns an error code or a particular return value, you can do something about it in your code.
+
+If the function cannot/doesn't return a value like for example a constructor or the error scenario was not thought of during the design or the developer just forgot to check, in all those cases, exceptions come in handy.
+
+=== Exceptions
+
+Exceptions shouldn't be the first choice, and shouldn't be blindly used as a cure all.
+You need to first perform conditional checks to address predicted problems.
+[WARNING]
+====
+You should never use exceptions to handle data validation problems.
+====
+Exceptions should be used only for unpredictable meaning exceptional problems.
+
+When an exception is invoked, the flow of execution will get transfer to somewhere that can handle the exception instead of the next line.
+Handling may include:
+
+* fixing the cause and retrying
+* logging or displaying the error message
+* terminate the application
+* carrying out as if nothing happened
+
+It can be invoked whether your code was prepared for it or not.
+
+Ideally, you would want to deal with the exception as close to the problem as possible meaning as near as possible in the call stack.
+Hence, you'll need to know how to unwind the call stack as well.
+
+* Wrap code that might invoke an exception in a `try` block.
+Keep it as small as possible coz:
+** you might want to undo whatever that caused the exception(and probably retry)
+** whatever is below the code that caused exception will be skipped.
+so you might want to keep it lean.
+* Add `catch` block(s) after `try`
+[NOTE]
+====
+`catch` is not optional.
+If you have a `try`, there must be at least one `catch` block.
+====
+** Catch more specific exceptions firsts and then generic ones
+** Catch the variables by reference to avoid slicing
+*** the variable can be of any type, native type or user defined type
+* There is no `finally` in {cpp} like in other languages.
+Normally cleanup is done in `finally` and in {cpp} this job is done by the destructors
+** Destructors run no matter how control leaves the blank
+
+=== `std::exception`
+STL has an exception class which is a base class to hierarchy of exceptions.
+Use these exceptions or derive your exceptions from them.
+Some derived classes present are
+
+* `logic_error`
+* `runtime_error`
+
+These are "marker classes", they don't have any member variables or member functions.
+All the exception classes just have `what()` which output an error message string in a loggable format.
+
+If you have to throw something to be caught, throw the objects (derived) from it.
+
+=== Stack unwinding
+
+* An exception is `throw`-n from one part of the code
+* If there is a `try` block
+** The exception is caught inside a `try` block in another part of the code
+** Destructors of all the variables, whose scope is local to `try` block, will be executed
+** Control will transfer to `catch`
+* If there was no `try` block
+** Destructors of all the variables, whose scope is local to the function which threw the exception, will be executed
+** Control returns to where that function was called from
+** Recursively keep going one level above in the call stack checking each time if there is a `try` block until you go out of `main`
+*** If you go out of `main`, OS steps in treats it as a crash
+
+=== Cost
+
+Exceptions have a cost.
+
+As long as the code is not throwing an exception, there is not too much cost from a `try`/`catch` block.
+However, when a `throw` occurs, a lot of time is used up.
+
+=== `noexcept`
+
+`noexcept` keyword after a function signature doesn't exactly mean that the function "will not throw an exception", rather it means the function "will not throw an exception that you can catch, and handle".
+
+[WARNING]
+====
+If there is a `noexcept` and there is an exception during its call, the program immediately ends, and most times there is no stack unwinding.
+So you cannot do any logging or notification or any other actions post the exception.
+====
+
+This leads to a slight performance improvement, and enhances expressiveness of the code by telling someone who reads you code "this works, if this doesn't work there might be an issue so serious that there's no pointing in continuing anymore".
+
+Conversely, you can use `noexcept(false)` to say this function "will throw an exception that is worth not missing".
+
+==== using with move
+If the move operation throws an exception, there's absolutely nothing you can do.
+There is no point in continuing anymore.
+Hence, in STL, many functions that use move semantics will only call `noexcept` functions.
+
+[TIP]
+====
+Mark move constructor, move assignment operator with `noexcept`.
+====
+
+Sometimes, if you don't mark your move constructors and move assignment operator with `noexcept`, compiler might pick a copy version instead of a move version.
+So better to mark it that way to force compiler to use move version more often for  performance reasons.
