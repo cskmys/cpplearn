@@ -1,0 +1,22 @@
+== Creational Design patterns
+
+Creational design patterns focus on improving object instantiation.
+
+=== Singleton
+Simplest of all creational patterns.
+
+Singleton is a way to ensure that there is only one instance of an object of a given type during the execution.
+
+Many believe it is an anti-pattern meaning not a good design pattern to use.
+But still it is useful for maintain a global state in the program, which is accessed and probably modified by other modules, at a central location.
+
+=== Builder
+
+Builder simplifies complex object creation, and initialization/configuration.
+
+Instead of using long and complex constructors, builder allows you to create, and configure objects step-by-step by calling one method call at a time.
+
+=== Prototype
+
+Prototyping helps increase efficiency via object cloning.
+This creates a set of complex prototype objects up front and then provides an interface that will let you clone these base type prototype objects hence reducing the cost of creation from scratch.

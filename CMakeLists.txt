@@ -17,7 +17,8 @@ endif()
 
 set(courses
         c01
-        c02)
+        c02
+        c03)
 
 set(c01
         m01
@@ -63,6 +64,9 @@ set(c02
         m13
         m14
         m15)
+
+set(c03
+        m01)
 
 macro(makeLink src dest target)
     add_custom_command(TARGET ${target} POST_BUILD COMMAND ${CMAKE_COMMAND} -E create_symlink ${src} ${dest}  DEPENDS  ${dest} COMMENT "mklink ${src} -> ${dest}")
