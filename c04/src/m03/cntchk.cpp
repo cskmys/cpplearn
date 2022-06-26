@@ -35,4 +35,5 @@ int main(){
     any = std::any_of(std::begin(v), std::end(v), oddChk);
     cout << all << none << any << endl;
 
+    return 0;
 }

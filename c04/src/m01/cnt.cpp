@@ -38,4 +38,5 @@ int main(){
 
     odds = std::count_if(std::begin(v), std::end(v), [](auto ele){ return ele % 2 != 0; });
 
+    return 0;
 }

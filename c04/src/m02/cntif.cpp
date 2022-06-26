@@ -33,5 +33,5 @@ int main(){
     int longMonths = std::count_if(std::begin(monthLen), std::end(monthLen), [](std::pair<int, int> ele){ return ele.second == 31;});
     cout << longMonths << endl;
 
-
+    return 0;
 }
