@@ -12,21 +12,15 @@ using std::string;
 #include <vector>
 using std::vector;
 
-#include <iterator>
-
 #include <algorithm>
+#include <sstream>
 
 template<typename Iter>
 string displayVec(Iter b, Iter e){
-    string s;
-    std::for_each(b, e, [&](typename Iter::value_type n){ s = s + std::to_string(n) + ", "; });
+    std::stringstream ss;
+    std::for_each(b, e, [&](typename Iter::value_type n){ ss << n << ", "; });
+    string s = ss.str();
     return s; // though you are returning a local variable, as it is movable, compiler moves it
-}
-template<>
-string displayVec(string::iterator b, string::iterator e){
-    string s;
-    std::for_each(b, e, [&](char c){ s = s + c + ", "; });
-    return s;
 }
 
 template<typename T>
