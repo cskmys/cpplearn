@@ -22,3 +22,9 @@ Hence, it allows you to customize object construction.
 
 Prototyping helps increase efficiency via object cloning.
 This creates a set of complex prototype objects up front and then provides an interface that will let you clone these base type prototype objects hence reducing the cost of creation from scratch.
+
+Hence, it can be used when:
+
+* You want to copy/clone large objects which takes up space or too much CPU
+* You are constantly reconfiguring created objects
+* Dynamic object creation where type of the object to be created is selected at runtime.
