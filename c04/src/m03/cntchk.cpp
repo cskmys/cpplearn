@@ -6,13 +6,14 @@
 using std::cout;
 using std::endl;
 
-#include <vector>
-using std::vector;
+#include <array>
+using std::array;
 
 #include <algorithm>
 
 int main(){
-    vector<int> v{2, 7, 1, 6, 2, -2, 4, 0};
+    array<int, 8> v{2, 7, 1, 6, 2, -2, 4, 0};
+    // showing that it works with not just "vector", "list", and "map" but "array" as well
 
     int odds = 0;
     for (auto ele : v) {
