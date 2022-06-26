@@ -1,0 +1,72 @@
+== Intro
+
+Many developers use STL not so much for a variety of reasons.
+But in reality, there isn't a trade-off to be made.
+By using STL your code is more readable, reliable, efficient, expressive, and fast.
+
+== STL Philosophy and Approach
+
+{cpp} standard library(STL) is not the biggest when compared to other languages.
+However, it is growing, and most of the things currently in STL is severely under-utilised.
+
+Don't be shy to delegate things to STL.
+If you need something, its most likely to be there.
+
+Not everything is a member function.
+There is a huge preference for free functions in the STL coz they split up the code of collections(for example: `<vector>`), from the code that works on these collections(for example: `<algorithm>`).
+`<iterator>` contains code that acts as the interface between the two.
+
+Hence, STL is divided into collections, algorithms, iterators.
+This kind of separation in STL makes room for countless number of permutations, and combinations between them.
+Hence, a vast array of features can be obtained without bloating the containers.
+
+=== `<algorithm>`
+Works on the whole container of any type(`vector` etc. or even `string` can be used as a container) or a range inside it, no matter what type of data(`int` etc. or any class that you write) that it contains.
+
+All this works through `iterator`.
+They are not pointers.
+
+If you ever feel the need to write a raw loop, there's almost certainly a better way to write it using STL.
+STL is well tested for edge cases and highly optimized for performance.
+Hence, it is probably better than what you would write.
+
+With use of STL nobody will need to read the whole loop to understand what you are doing, the code becomes very clear, readable and expresses the intent very well.
+In other words, why have 8-10 lines of code that require a comment when you could just have a single line of code that documents itself.
+
+=== Some headers to know
+Working with collections: `algorithm`
+
+Collections: `vector`, `array`, `list`, `stack`, `map`, `queue`,
+[NOTE]
+====
+you can treat `string` as a collection of `char`
+====
+
+Gain particular functionality: `iterator`
+
+Pairs: `utility`
+
+Tuple: `tuple`
+
+Certain calculations: `numeric`
+
+Complex numbers: `complex`
+
+Math oriented such as trigonometry: `cmath`
+
+Regular expression: `regex`
+
+Time-related: `chrono`
+
+Smart pointers: `memory`
+
+=== Using member or non-member functions for `begin` and `end`
+If an STL collection contains `begin` and `end` as its member functions, then the non-member functions `begin` and `end` in STL will return the member function version.
+
+The non-member function versions work with not just STL containers but also C-style arrays as well.
+When used with C-style array they know to automatically calculate the beginning and the end addresses.
+
+You can write a function that accepts iterators and works on your collection.
+To this function, you can use non-member function version of `begin` and `end` even if your collection itself doesn't have member functions `begin`, and `end`.
+
+Considering all the benefits, use the non-member functions `begin` and `end`.

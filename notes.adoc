@@ -75,10 +75,17 @@ Just capture everything by value/reference in the capture clause, and then list 
 
 In the lambda declaration, if the object that needs to be capture is not very big, capture it by value, and if you want to mutate the object that you capture, capture it by reference.
 
-When you are using verbs such as find, sort, generate, remove etc. it is highly likely that an STL algorithm implementation for it already exists.
+The first thing to do before writing any code is to ask yourself:
+[Quote]
+____
+What are you trying to do?
+____
+If you use verbs such as find, sort, generate, remove etc. it is highly likely that an STL algorithm implementation for it already exists.
 So never implemented anything on containers without thoroughly checking STL algorithms.
 
 Stop writing raw loops and use STL algorithms to prevent both obvious mistakes and subtle mistakes such as iterating over the very container that you are modifying.
+
+If you feel the need to write a raw loop, there's almost certainly a better way to write it.
 
 Using STL algorithms gives you interchangeability between `vector`, and `list`.
 
@@ -108,3 +115,5 @@ If you mark `noexcept` and yet there is an exception, the program ends and there
 Mark move constructor, and move assignment operator with `noexcept`
 
 Follow SOLID
+
+

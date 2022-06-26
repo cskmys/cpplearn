@@ -1,0 +1,3 @@
+= README
+
+https://app.pluralsight.com/library/courses/beautiful-cplusplus-stl-algorithms/[Beautiful C++ 14: STL Algorithms] from pluralsight
