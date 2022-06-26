@@ -70,3 +70,14 @@ You can write a function that accepts iterators and works on your collection.
 To this function, you can use non-member function version of `begin` and `end` even if your collection itself doesn't have member functions `begin`, and `end`.
 
 Considering all the benefits, use the non-member functions `begin` and `end`.
+
+== Glossary
+* `count`: how many target values are present in the collection
+
+* `count_if`: how many values in the collection meet a particular condition
+
+* `all_of`: does all the values in the collection meet a particular condition?
+
+* `none_of`: does none of the values in the collection meet a particular condition?
+
+* `any_of`: does any of the values in the collection meet a particular condition?
