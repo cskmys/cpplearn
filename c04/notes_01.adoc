@@ -72,12 +72,39 @@ To this function, you can use non-member function version of `begin` and `end` e
 Considering all the benefits, use the non-member functions `begin` and `end`.
 
 == Glossary
-* `count`: how many target values are present in the collection
+* `count`: how many target values are present in the collection?
 
-* `count_if`: how many values in the collection meet a particular condition
+* `count_if`: how many values in the collection meet a particular condition?
 
 * `all_of`: does all the values in the collection meet a particular condition?
 
 * `none_of`: does none of the values in the collection meet a particular condition?
 
 * `any_of`: does any of the values in the collection meet a particular condition?
+
+* `find`: get the iterator of the first occurrence of the target value in a collection
++
+[IMPORTANT]
+====
+Here, first doesn't mean the first from the beginning of the collection.
+First means the first one starting from the iterator that you passed into the collection as `begin`.
+====
++
+[NOTE]
+====
+If your search failed you get `end`
+====
+
+* `find_if`:  get the iterator of the first element in a collection that meets a particular condition
+
+* `find_if_not`:  get the iterator of the first element in a collection that does not meet a particular condition
+
+* `find_first_of`: get the iterator of the first element found in a given collection that also belongs to the search collection
+
+* `search`: get the iterator of the first element of the first occurrence of a (whole) sequence in a collection
+
+* `find_end`: get the iterator of the first element of the last occurrence of a sequence in a collection
+
+* `search_n`: get the iterator of the first occurrence of `n` consecutive instances of the target element in a collection
+
+* `adjacent_find`: get the iterator of the first occurrence of 2 consecutive instances of any element in a collection
