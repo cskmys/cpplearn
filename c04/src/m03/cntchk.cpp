@@ -6,16 +6,13 @@
 using std::cout;
 using std::endl;
 
-#include <list>
-using std::list;
-
-#include <map>
-using std::map;
+#include <vector>
+using std::vector;
 
 #include <algorithm>
 
 int main(){
-    list<int> v{2, 7, 1, 6, 2, -2, 4, 0};
+    vector<int> v{2, 7, 1, 6, 2, -2, 4, 0};
 
     int odds = 0;
     for (auto ele : v) {
