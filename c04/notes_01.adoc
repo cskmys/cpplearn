@@ -72,6 +72,9 @@ To this function, you can use non-member function version of `begin` and `end` e
 Considering all the benefits, use the non-member functions `begin` and `end`.
 
 == Glossary
+
+=== Counting and Finding
+
 * `count`: how many target values are present in the collection?
 
 * `count_if`: how many values in the collection meet a particular condition?
@@ -108,3 +111,135 @@ If your search failed you get `end`
 * `search_n`: get the iterator of the first occurrence of `n` consecutive instances of the target element in a collection
 
 * `adjacent_find`: get the iterator of the first occurrence of 2 consecutive instances of any element in a collection
+
+=== Sorting
+
+* `sort`: sort a collection in ascending order or as per the lambda
++
+[NOTE]
+====
+The collection's item type should work with operator `<` for `sort` to work.
+If not, write a predicate to compare.
+====
++
+[WARNING]
+====
+This modifies your collection.
+If you don't want that, make a copy, and work on the copy.
+====
+
+
+* `stable_sort`: assumes that a given collection is already sorted, then applies the second sorting rule which tries to maintain the given order as much as possible.
++
+[IMPORTANT]
+====
+If you want to sort, lets say by number and then within the elements that are having same number, you want to sort by name.
+In that case, do a regular `sort` by name, and then `stable_sort` by number.
+====
++
+[WARNING]
+====
+Use it only to applies a second sub-sorting rule.
+Don't use it for everything, this is very slow.
+====
+
+* `is_sorted`: is a collection sorted in ascending order or as per the lambda
+
+* `max_element`: get the iterator of the largest item in a collection
+
+* `min_element`: get the iterator of the smallest item in a collection
+
+* `upper_bound`: in a sorted collection, get the iterator to the first element which is greater than the target
++
+[WARNING]
+====
+If you use this with unsorted collection, you'll have unexpected output
+====
++
+[NOTE]
+====
+This is very fast as it performs a binary search within the given sorted range using:
+
+----
+item < target
+----
+
+or the predicate with arguments:
+
+----
+(item_type, target_type)
+----
+====
+
+* `lower_bound`: in a sorted collection, get the iterator to the first element which is not less than the target
++
+[NOTE]
+====
+`lower_bound` looks quite similar to `upper_bound`, but with it get iterator to first element which is greater than or equal to the target instead of just greater than with `upper_bound`.
+====
++
+[TIP]
+====
+If your collection is sorted, use `lower_bound` or `upper_bound` to find a value rather than `find` or its related functions.
+====
+
+* `shuffle`: shuffle a given collection using a given generator.
++
+[TIP]
+====
+Just use `mt19937` generator, don't think too much.
+====
++
+[WARNING]
+====
+Modifies the collection.
+====
+
+* `partial_sort`: instead of sorting the whole collection between `begin` and `end`, this sorts the collection between `begin` and `end` until `middle` i.e. this sorts in such a way that after execution, all the elements until the pre-sort position of `middle` are in order and the remaining elements may not be in order.
++
+[IMPORTANT]
+====
+After partial sort everything that comes at and after the pre-sort position of `middle`, will be meet the sorting predicate(by default, be greater than) over the elements that come before the pre-sort position of `middle`.
+====
++
+[TIP]
+====
+If the collection is too big, and you need to sort just a few, then this could give a huge boost in performance.
+====
++
+[NOTE]
+====
+There is no `stable_partial_sort`.
+====
+
+* `is_sorted_until`: to get the iterator of the position in a collection until which the elements are sorted.
+
+* `partial_sort_copy`: do `partial_sort` into another collection without modifying the original collection.
+The number of elements partially sorted is the size of the destination collection.
++
+[WARNING]
+====
+If you are creating an empty collection, and to extend it, if you do `reserve`, "partial_sort_copy" doesn't work.
+`reserve` internally expands the memory but as the collection is still not filled, `size()` will return 0.
+`partial_sort_copy` uses `size()` to figure out how many elements to partially sort.
+Therefore, with `reserve`, you'll get `size()` as 0, and `partial_sort_copy` does nothing.
+Hence, do not use `reserve` here, use `resize` coz it not only does `reserve` but also fills in the default values.
+Now, `size()` will return a non-zero value, and `partial_sort_copy` will do partial sorting.
+====
+
+* `nth_element`: to put the `n`^th^ element of a collection with a value that would have occupied that position if the collection was sorted.
++
+[IMPORTANT]
+====
+After running this, only the `n`^th^ element is in order, everything before it is lesser than it but may not be in order and everything after it is greater than it but may not be in order.
+====
++
+[TIP]
+====
+Use this for rough partitioning the collection as everyone who are lesser than and everyone who are greater than the pre-sort value at `n`.
+====
++
+[NOTE]
+====
+You cannot simply pass the value of `n`, you'll need to provide the iterator for the `n`^th^ position.
+====

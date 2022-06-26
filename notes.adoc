@@ -89,7 +89,10 @@ If you feel the need to write a raw loop, there's almost certainly a better way 
 
 Using STL algorithms gives you interchangeability between `vector`, and `list`.
 
-By using STL containers, algorithms and iterators, you can focus on what to achieve rather than how to achieve it.
+Sort operation requires your collection's item type to work with `<` operator(meaning by default it sorts in ascending order), or you can pass a lambda.
+
+For containers, `reserve` will only extend the internal memory but no values will be initialized.
+Hence, `size` will return 0.
 
 A better memory management design is one which does one of the following(in the order of precedence):
 
@@ -116,4 +119,4 @@ Mark move constructor, and move assignment operator with `noexcept`
 
 Follow SOLID
 
-
+Whenever you want random numbers, just use `mt19937` generator from `<random>`.
