@@ -71,6 +71,14 @@ To this function, you can use non-member function version of `begin` and `end` e
 
 Considering all the benefits, use the non-member functions `begin` and `end`.
 
+/*
+Pair allows you to hold two pieces of information together as a single entity.
+std::pair, works with any combination of types.
+map and dictionary already use this.
+std::pair::first, and std::pair::second are the elements of pair.
+*/
+
+
 == Glossary
 
 === Counting and Finding
@@ -243,3 +251,19 @@ Use this for rough partitioning the collection as everyone who are lesser than a
 ====
 You cannot simply pass the value of `n`, you'll need to provide the iterator for the `n`^th^ position.
 ====
+
+=== Comparing and Accumulating
+
+* `equal`: check if two collections are equal or not.
+
+* `mismatch`: returns an iterator pair(`std::pair`) at the first point of divergence between the two collections.
+
+* `accumulate`: performs a `+` operation or a predicate on the whole collection
++
+[NOTE]
+====
+The total need not have to be same type as elements.
+For example, type can be purchase order, and total is an integer.
+====
+
+* `for_each`: to apply a predicate to each element
